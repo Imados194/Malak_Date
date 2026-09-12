@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pour Malak 💫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory: #FCF7F1;
+    --blush: #F6D9DE;
+    --lavender: #E4D7F2;
+    --champagne: #F3E4C4;
+    --plum: #3E2F45;
+    --plum-soft: #6E5D74;
+    --gold: #C6994F;
+    --gold-light: #E9C983;
+    --rose: #DE9FB0;
+    --white: #FFFFFF;
+    --coffee-soft: #F1E1D2;
+    --berry-soft: #F7DCE1;
+    --shadow-color: 62,47,72;
+    --font-display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+    --font-sans: 'Jost', 'Segoe UI', sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    min-height:100%;
+    overflow:hidden;
+    font-family: var(--font-sans);
+    color: var(--plum);
+    background: linear-gradient(160deg, var(--blush) 0%, var(--lavender) 45%, var(--champagne) 100%);
+    background-attachment: fixed;
+    overflow-x:hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,h2{ font-family: var(--font-display); margin:0; }
+  p{ margin:0; }
+  button{ font-family: var(--font-sans); }
+
+  /* ---------- background atmosphere ---------- */
+  .sky{ position:fixed; inset:0; z-index:-2; overflow:hidden; }
+  .glow{ position:absolute; border-radius:50%; filter: blur(70px); opacity:.5; }
+  .glow--1{ width:440px; height:440px; background:var(--blush); top:-140px; left:-120px; animation: drift1 24s ease-in-out infinite alternate; }
+  .glow--2{ width:400px; height:400px; background:var(--lavender); bottom:-150px; right:-100px; animation: drift2 28s ease-in-out infinite alternate; }
+  .glow--3{ width:320px; height:320px; background:var(--champagne); top:38%; left:58%; animation: drift3 32s ease-in-out infinite alternate; }
+  @keyframes drift1{ from{ transform: translate(0,0);} to{ transform: translate(70px,50px);} }
+  @keyframes drift2{ from{ transform: translate(0,0);} to{ transform: translate(-60px,-40px);} }
+  @keyframes drift3{ from{ transform: translate(0,0) scale(1);} to{ transform: translate(-40px,30px) scale(1.1);} }
+
+  .sparkles{ position:absolute; inset:0; }
+  .sparkle{
+    position:absolute;
+    background: var(--gold-light);
+    clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    animation: twinkle var(--dur,4s) ease-in-out infinite;
+    animation-delay: var(--delay,0s);
+  }
+  @keyframes twinkle{ 0%,100%{ opacity:.12; transform: scale(.7) rotate(0deg);} 50%{ opacity:.9; transform: scale(1.15) rotate(20deg);} }
+
+  /* ---------- progress ---------- */
+  .progress{
+    position:fixed; top: max(16px, env(safe-area-inset-top)); left:50%; transform: translateX(-50%);
+    display:flex; gap:8px; z-index:50;
+  }
+  .dot{ width:7px; height:7px; border-radius:50%; background: rgba(110,93,116,.28); transition: all .35s ease; }
+  .dot.active{ background: var(--gold); transform: scale(1.4); }
+
+  /* ---------- layout ---------- */
+  .stage{ position:relative; height:100%; overflow:hidden; }
+  .panel{
+    height:100%;
+    min-height:0;
+    max-height:100%;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 4.5rem 1.4rem 1.5rem;
+    opacity:0;
+  }
+  .panel.enter{ animation: panelIn .8s cubic-bezier(.22,1,.36,1) forwards; }
+  .panel[hidden]{ display:none !important; }
+  @keyframes panelIn{ from{ opacity:0; transform: translateY(22px);} to{ opacity:1; transform:none;} }
+
+  /* ---------- step 1: the ask ---------- */
+  .halo-wrap{ position:relative; width:1px; height:1px; }
+  .halo-glow{
+    position:absolute; width:320px; height:320px; top:50%; left:50%;
+    transform: translate(-50%,-58%);
+    background: radial-gradient(circle, rgba(233,201,131,.6) 0%, rgba(233,201,131,.25) 40%, transparent 72%);
+    filter: blur(4px);
+    animation: haloPulse 5s ease-in-out infinite;
+    z-index:0;
+  }
+  .halo-ring{
+    position:absolute; top:50%; left:50%; border-radius:50%;
+    border: 1.5px solid rgba(198,153,79,.45);
+    transform: translate(-50%,-58%);
+    z-index:0;
+  }
+  .halo-ring--1{ width:240px; height:240px; animation: haloSpin 40s linear infinite; }
+  .halo-ring--2{ width:278px; height:278px; border-color: rgba(198,153,79,.25); animation: haloSpin 55s linear infinite reverse; }
+  @keyframes haloPulse{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
+  @keyframes haloSpin{ from{ transform: translate(-50%,-58%) rotate(0deg);} to{ transform: translate(-50%,-58%) rotate(360deg);} }
+
+  .name{
+    position:relative; z-index:1;
+    font-size: clamp(3.1rem, 9vw + 1rem, 6.4rem);
+    font-style: italic;
+    font-weight:600;
+    color: var(--plum);
+    line-height:1;
+    margin-bottom: .9rem;
+    text-shadow: 0 4px 30px rgba(198,153,79,.35);
+  }
+  .question{
+    position:relative; z-index:1;
+    max-width: 30ch;
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    font-weight:500;
+    color: var(--plum-soft);
+    line-height:1.5;
+    margin-bottom: 2.2rem;
+  }
+
+  .choice-row{ position:relative; z-index:1; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+
+  .hint{
+    margin-top:1.2rem; min-height:1.2em;
+    font-family: var(--font-display); font-style:italic;
+    color: var(--plum-soft); font-size:.98rem; opacity:0; transition: opacity .4s ease;
+  }
+  .hint.show{ opacity:.85; }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    border:none; cursor:pointer; border-radius:999px;
+    padding: .95rem 2rem;
+    font-size: clamp(.98rem, 1.8vw, 1.06rem);
+    font-weight:600;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    box-shadow: 0 14px 34px rgba(var(--shadow-color),.2);
+  }
+  .btn:hover{ transform: translateY(-3px); box-shadow: 0 18px 42px rgba(var(--shadow-color),.28); }
+  .btn:active{ transform: translateY(-1px) scale(.98); }
+  .btn:focus-visible{ outline: 3px solid var(--gold); outline-offset:3px; }
+
+  .btn--yes{ background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: var(--plum); transition: transform .3s ease, box-shadow .25s ease, background .25s ease; }
+
+  .btn--no{
+    background: transparent; color: var(--plum-soft);
+    border: 2px solid rgba(110,93,116,.35);
+    box-shadow:none;
+  }
+  .btn--no:hover{ box-shadow:none; }
+
+  .btn--primary{ background: linear-gradient(135deg, var(--rose), var(--gold-light)); color: var(--plum); }
+  .btn--primary:disabled{ opacity:.4; cursor:not-allowed; transform:none; box-shadow:none; }
+
+  .btn--ghost{ background:transparent; color: var(--plum-soft); box-shadow:none; text-decoration: underline; text-underline-offset:3px; padding:.5rem 1rem; font-weight:500; }
+  .btn--ghost:hover{ transform:none; box-shadow:none; color:var(--plum); }
+
+  .btn--continue{ margin-top: .85rem; }
+
+  /* ---------- step 2: coffee / food ---------- */
+  .heading{ font-size: clamp(1.85rem, 5vw, 2.7rem); margin-bottom:.5rem; }
+  .subheading{ color: var(--plum-soft); font-size: clamp(.95rem, 2vw, 1.08rem); margin-bottom: 1.5rem; max-width:32ch; line-height:1.4; }
+
+  .cards{ display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; max-width: 600px; }
+  .card{
+    all: unset;
+    position:relative;
+    cursor:pointer;
+    box-sizing:border-box;
+    flex: 1 1 220px; max-width:250px;
+    background: var(--white);
+    border: 2px solid transparent;
+    border-radius: 26px 26px 26px 8px;
+    padding: 1.35rem 1.25rem 1.25rem;
+    text-align:center;
+    box-shadow: 0 14px 34px rgba(var(--shadow-color),.12);
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .card:hover{ transform: translateY(-6px); box-shadow: 0 20px 44px rgba(var(--shadow-color),.18); }
+  .card.selected{ border-color: var(--gold); box-shadow: 0 20px 44px rgba(198,153,79,.35); }
+  .card__check{
+    position:absolute; top:10px; right:12px;
+    width:22px; height:22px; border-radius:50%;
+    background: var(--gold); color:#fff; font-size:.75rem;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; transform: scale(.4); transition: all .3s ease;
+  }
+  .card.selected .card__check{ opacity:1; transform: scale(1); }
+  .card__badge{
+    width:58px; height:58px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.7rem; margin: 0 auto .65rem;
+  }
+  .card[data-choice="coffee"] .card__badge{ background: var(--coffee-soft); }
+  .card[data-choice="food"] .card__badge{ background: var(--berry-soft); }
+  .card__title{ display:block; font-family: var(--font-display); font-size:1.35rem; font-weight:600; margin-bottom:.3rem; }
+  .card__desc{ display:block; font-size:.86rem; color: var(--plum-soft); line-height:1.4; }
+
+  /* ---------- step 2b: cuisine chips ---------- */
+  .chip-grid{ display:flex; flex-wrap:wrap; gap:.7rem; justify-content:center; max-width:380px; margin-bottom:.4rem; }
+  .chip{
+    all: unset;
+    position:relative;
+    cursor:pointer;
+    box-sizing:border-box;
+    display:flex; flex-direction:column; align-items:center; gap:.3rem;
+    width:104px;
+    padding: .95rem .5rem .8rem;
+    background: var(--white);
+    border: 2px solid transparent;
+    border-radius: 20px 20px 20px 6px;
+    box-shadow: 0 10px 26px rgba(var(--shadow-color),.12);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    text-align:center;
+  }
+  .chip:hover{ transform: translateY(-4px); box-shadow: 0 15px 32px rgba(var(--shadow-color),.18); }
+  .chip.selected{ border-color: var(--gold); box-shadow: 0 15px 32px rgba(198,153,79,.32); }
+  .chip__check{
+    position:absolute; top:7px; right:9px;
+    width:19px; height:19px; border-radius:50%;
+    background: var(--gold); color:#fff; font-size:.65rem;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; transform: scale(.4); transition: all .25s ease;
+  }
+  .chip.selected .chip__check{ opacity:1; transform: scale(1); }
+  .chip__emoji{ font-size:1.6rem; }
+  .chip__label{ font-size:.84rem; font-weight:600; color: var(--plum); }
+
+  /* ---------- step 3: date & time ---------- */
+  .fields{ display:flex; gap:.9rem; flex-wrap:wrap; justify-content:center; margin: .2rem 0 1.1rem; width:100%; max-width:460px; }
+  .field{ display:flex; flex-direction:column; gap:.4rem; text-align:left; flex:1 1 190px; }
+  .field__label{ font-size:.83rem; color: var(--plum-soft); font-weight:500; padding-left:.2rem; }
+  .field__input{
+    appearance:none; -webkit-appearance:none;
+    padding: .82rem 1rem; border-radius:16px;
+    border: 2px solid rgba(110,93,116,.22);
+    background: var(--white);
+    font-family: var(--font-sans); font-size:1rem; color: var(--plum);
+    accent-color: var(--gold);
+    transition: border-color .25s ease, box-shadow .25s ease;
+    width:100%;
+  }
+  .field__input:focus{ outline:none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(198,153,79,.18); }
+  .error{ color:#B4485C; font-size:.88rem; margin-bottom:.9rem; min-height:1.2em; }
+
+  /* ---------- step 4: confirmation ---------- */
+  .panel--final{ position:relative; overflow:visible; }
+  .celebrate{ position:absolute; inset:0; pointer-events:none; overflow:visible; }
+  .star-particle{
+    position:absolute; width:12px; height:12px;
+    clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    animation: starFall 1.9s ease-out forwards;
+  }
+  @keyframes starFall{
+    0%{ transform: translateY(0) rotate(0deg) scale(1); opacity:1; }
+    100%{ transform: translateY(180px) rotate(200deg) scale(.3); opacity:0; }
+  }
+
+  .summary-card{
+    background: var(--white);
+    border-radius: 26px 26px 8px 26px;
+    padding: 1.5rem 1.4rem;
+    box-shadow: 0 18px 44px rgba(var(--shadow-color),.16);
+    width: 100%; max-width: 360px;
+    margin: .2rem auto 1.3rem;
+    text-align:left;
+    display:flex; flex-direction:column; gap:1rem;
+  }
+  .summary-row{ display:flex; align-items:center; gap:.85rem; }
+  .summary-icon{
+    font-size:1.4rem; width:42px; height:42px; flex-shrink:0;
+    background: var(--champagne); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .summary-label{ display:block; font-size:.76rem; color: var(--plum-soft); }
+  .summary-value{ display:block; font-family: var(--font-display); font-size:1.18rem; font-weight:600; color: var(--plum); }
+
+  .final-actions{ display:flex; flex-direction:column; gap: .75rem; align-items:center; }
+
+  /* ---------- toast ---------- */
+  .toast{
+    position:fixed; bottom: max(24px, env(safe-area-inset-bottom)); left:50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--plum); color: var(--ivory);
+    padding: .8rem 1.4rem; border-radius:999px;
+    font-size:.92rem;
+    opacity:0; pointer-events:none;
+    transition: opacity .3s ease, transform .3s ease;
+    box-shadow: 0 14px 34px rgba(0,0,0,.28);
+    z-index:100;
+    max-width: 90vw; text-align:center;
+  }
+  .toast.show{ opacity:1; transform: translateX(-50%) translateY(0); }
+
+  /* ---------- no-button, escaping ---------- */
+  #noBtn.dodging{ position:fixed; z-index:60; transition: box-shadow .2s ease; }
+  .copy-note{ max-width:34ch; color:var(--plum-soft); font-size:.86rem; line-height:1.4; }
+
+  @media (max-width: 480px){
+    .panel{ padding: 3.7rem 1rem 1rem; }
+    .choice-row{ width:100%; }
+    .choice-row .btn{ flex:1 1 auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .glow, .sparkle, .halo-glow, .halo-ring--1, .halo-ring--2{ animation: none !important; }
+    .panel.enter{ animation: fadeOnly .5s ease forwards; }
+    @keyframes fadeOnly{ from{opacity:0;} to{opacity:1;} }
+  }
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true">
+  <div class="glow glow--1"></div>
+  <div class="glow glow--2"></div>
+  <div class="glow glow--3"></div>
+  <div class="sparkles" id="sparkles"></div>
+</div>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<main class="stage">
+
+  <!-- STEP 1 -->
+  <section class="panel enter" data-step="1" id="panel-1">
+    <div class="halo-wrap" aria-hidden="true">
+      <div class="halo-glow"></div>
+      <div class="halo-ring halo-ring--2"></div>
+      <div class="halo-ring halo-ring--1"></div>
+    </div>
+    <h1 class="name">Malak</h1>
+    <p class="question">Veux-tu sortir avec moi ?</p>
+    <div class="choice-row">
+      <button class="btn btn--yes" id="yesBtn1">Oui, avec plaisir</button>
+      <button class="btn btn--no" id="noBtn">Non</button>
+    </div>
+    <p class="hint" id="hint1"></p>
+  </section>
+
+  <!-- STEP 2: coffee or food -->
+  <section class="panel" data-step="2" id="panel-2" hidden>
+    <h2 class="heading">Café ou resto ?</h2>
+    <p class="subheading">Choisis ce qui te ferait le plus plaisir.</p>
+    <div class="cards">
+      <button type="button" class="card" data-choice="coffee">
+        <span class="card__check">✓</span>
+        <span class="card__badge">☕</span>
+        <span class="card__title">Café</span>
+        <span class="card__desc">Un endroit cosy, un bon café, et du temps pour discuter.</span>
+      </button>
+      <button type="button" class="card" data-choice="food">
+        <span class="card__check">✓</span>
+        <span class="card__badge">🍽️</span>
+        <span class="card__title">Resto</span>
+        <span class="card__desc">Tu choisis le type de cuisine juste après.</span>
+      </button>
+    </div>
+    <button class="btn btn--primary btn--continue" id="continue2" disabled>Continuer</button>
+  </section>
+
+  <!-- STEP 2b: cuisine (only if food chosen) -->
+  <section class="panel" data-step="2b" id="panel-2b" hidden>
+    <h2 class="heading">Quel genre de cuisine te tente ?</h2>
+    <p class="subheading">Choisis simplement ce qui te tente le plus.</p>
+    <div class="chip-grid">
+      <button type="button" class="chip" data-label="Grillades" data-emoji="🥩">
+        <span class="chip__check">✓</span>
+        <span class="chip__emoji">🥩</span>
+        <span class="chip__label">Viande & grillades</span>
+      </button>
+      <button type="button" class="chip" data-label="Sushi" data-emoji="🍣">
+        <span class="chip__check">✓</span>
+        <span class="chip__emoji">🍣</span>
+        <span class="chip__label">Sushi</span>
+      </button>
+      <button type="button" class="chip" data-label="Poisson" data-emoji="🐟">
+        <span class="chip__check">✓</span>
+        <span class="chip__emoji">🐟</span>
+        <span class="chip__label">Poisson</span>
+      </button>
+      <button type="button" class="chip" data-label="Italien" data-emoji="🍝">
+        <span class="chip__check">✓</span>
+        <span class="chip__emoji">🍝</span>
+        <span class="chip__label">Italien</span>
+      </button>
+      <button type="button" class="chip" data-label="Indien" data-emoji="🍛">
+        <span class="chip__check">✓</span>
+        <span class="chip__emoji">🍛</span>
+        <span class="chip__label">Indien</span>
+      </button>
+      <button type="button" class="chip" data-label="Traditionnel" data-emoji="🍲">
+        <span class="chip__check">✓</span>
+        <span class="chip__emoji">🍲</span>
+        <span class="chip__label">Cuisine algérienne</span>
+      </button>
+    </div>
+    <button class="btn btn--primary btn--continue" id="continueCuisine" disabled>Continuer</button>
+  </section>
+
+  <!-- STEP 3: date & time -->
+  <section class="panel" data-step="3" id="panel-3" hidden>
+    <h2 class="heading">Quand est-ce que je viens te chercher ?</h2>
+    <p class="subheading">Choisis le moment qui te convient le mieux.</p>
+    <div class="fields">
+      <label class="field">
+        <span class="field__label">Date</span>
+        <input type="date" id="dateInput" class="field__input">
+      </label>
+      <label class="field">
+        <span class="field__label">Heure</span>
+        <input type="time" id="timeInput" class="field__input">
+      </label>
+    </div>
+    <p class="error" id="fieldError" hidden>Choisis d'abord une date et une heure.</p>
+    <button class="btn btn--primary btn--continue" id="continue3">Confirmer</button>
+  </section>
+
+  <!-- STEP 4: confirmation -->
+  <section class="panel panel--final" data-step="4" id="panel-4" hidden>
+    <div class="celebrate" id="celebrate" aria-hidden="true"></div>
+    <h2 class="heading">C'est un rendez-vous</h2>
+    <p class="subheading">Ton choix est prêt. Copie le message et envoie-le à Imad.</p>
+    <div class="summary-card">
+      <div class="summary-row">
+        <span class="summary-icon" id="summaryIcon">☕</span>
+        <div>
+          <span class="summary-label">Programme</span>
+          <span class="summary-value" id="summaryChoice">—</span>
+        </div>
+      </div>
+      <div class="summary-row">
+        <span class="summary-icon">📅</span>
+        <div>
+          <span class="summary-label">Date</span>
+          <span class="summary-value" id="summaryDate">—</span>
+        </div>
+      </div>
+      <div class="summary-row">
+        <span class="summary-icon">🕒</span>
+        <div>
+          <span class="summary-label">Heure du rendez-vous</span>
+          <span class="summary-value" id="summaryTime">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="final-actions">
+      <button class="btn btn--primary" id="copyBtn">Copier et envoyer à Imad</button>
+      <textarea id="copyFallback" class="field__input" rows="5" readonly hidden aria-label="Message à copier et envoyer à Imad"></textarea>
+      <p class="copy-note" id="copyNote">Après la copie, envoie le message à Imad sur Instagram ou Snapchat.</p>
+      <button class="btn btn--ghost" id="resetBtn">Recommencer</button>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- background sparkles ---------------- */
+  var sparkleColors = ['#E9C983', '#DE9FB0', '#FFFFFF'];
+  var sparklesLayer = document.getElementById('sparkles');
+  var sparkleCount = window.innerWidth < 480 ? 14 : 22;
+  for (var i = 0; i < sparkleCount; i++) {
+    var s = document.createElement('div');
+    s.className = 'sparkle';
+    var size = 4 + Math.random() * 7;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.background = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+    s.style.setProperty('--dur', (3 + Math.random() * 4) + 's');
+    s.style.setProperty('--delay', (Math.random() * 5) + 's');
+    sparklesLayer.appendChild(s);
+  }
+
+  /* ---------------- navigation & progress ---------------- */
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  var progressEl = document.getElementById('progress');
+  var dots = [];
+
+  function renderDots(total) {
+    progressEl.innerHTML = '';
+    for (var i = 0; i < total; i++) {
+      var d = document.createElement('span');
+      d.className = 'dot';
+      progressEl.appendChild(d);
+    }
+    dots = Array.prototype.slice.call(progressEl.children);
+  }
+
+  function updateProgress(activeIndex) {
+    dots.forEach(function (d, i) {
+      d.classList.toggle('active', i <= activeIndex);
+    });
+  }
+
+  var currentPath = ['panel-1', 'panel-2', 'panel-3', 'panel-4'];
+  renderDots(currentPath.length);
+  updateProgress(0);
+
+  function showPanel(id) {
+    panels.forEach(function (p) {
+      p.hidden = true;
+      p.classList.remove('enter');
+    });
+    var target = document.getElementById(id);
+    target.hidden = false;
+    requestAnimationFrame(function () {
+      target.classList.add('enter');
+    });
+    var idx = currentPath.indexOf(id);
+    if (idx > -1) updateProgress(idx);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if (id !== 'panel-1') {
+      noBtn.classList.remove('dodging');
+      noBtn.style.left = '';
+      noBtn.style.top = '';
+      noBtn.style.margin = '';
+    }
+  }
+
+  /* ---------------- step 1: la question ---------------- */
+  var yesBtn = document.getElementById('yesBtn1');
+  var noBtn = document.getElementById('noBtn');
+  var hint1 = document.getElementById('hint1');
+
+  var noMessages = ['Non', 'Même pas en rêve', 'On réessaie ?', 'Pas vraiment', 'Toujours non', 'Bien tenté', 'Presque', 'Sérieusement ?', 'Allez...', 'Pas aujourd\u2019hui', 'Tu es sûre ?'];
+  var dodgeCount = 0;
+
+  function rectsOverlap(a, b, pad) {
+    return !(
+      a.left + a.width + pad < b.left ||
+      b.left + b.width + pad < a.left ||
+      a.top + a.height + pad < b.top ||
+      b.top + b.height + pad < a.top
+    );
+  }
+
+  function moveNoButton(e) {
+    if (e && e.cancelable) e.preventDefault();
+    dodgeCount++;
+    noBtn.textContent = noMessages[Math.min(dodgeCount - 1, noMessages.length - 1)];
+
+    if (!noBtn.classList.contains('dodging')) {
+      var startRect = noBtn.getBoundingClientRect();
+      noBtn.classList.add('dodging');
+      noBtn.style.left = startRect.left + 'px';
+      noBtn.style.top = startRect.top + 'px';
+      noBtn.style.margin = '0';
+    }
+
+    var margin = 20;
+    var btnRect = noBtn.getBoundingClientRect();
+    var maxLeft = Math.max(margin, window.innerWidth - btnRect.width - margin);
+    var maxTop = Math.max(margin, window.innerHeight - btnRect.height - margin);
+    var yesRect = yesBtn.getBoundingClientRect();
+
+    var newLeft, newTop, attempts = 0;
+    do {
+      newLeft = margin + Math.random() * (maxLeft - margin);
+      newTop = margin + Math.random() * (maxTop - margin);
+      attempts++;
+    } while (
+      attempts < 12 &&
+      rectsOverlap({ left: newLeft, top: newTop, width: btnRect.width, height: btnRect.height }, yesRect, 24)
+    );
+
+    noBtn.style.left = newLeft + 'px';
+    noBtn.style.top = newTop + 'px';
+
+    var scale = Math.min(1 + dodgeCount * 0.035, 1.3);
+    yesBtn.style.transform = 'scale(' + scale + ')';
+
+    hint1.textContent = 'Ce bouton ne marche pas, en fait.';
+    hint1.classList.add('show');
+  }
+
+  noBtn.addEventListener('pointerenter', moveNoButton);
+  noBtn.addEventListener('touchstart', moveNoButton, { passive: false });
+  noBtn.addEventListener('click', moveNoButton);
+  noBtn.addEventListener('focus', moveNoButton);
+  noBtn.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      moveNoButton(e);
+    }
+  });
+
+  yesBtn.addEventListener('click', function () {
+    showPanel('panel-2');
+  });
+
+  /* ---------------- step 2: café ou resto ---------------- */
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#panel-2 .card'));
+  var continue2 = document.getElementById('continue2');
+  var selectedChoice = null;
+
+  cards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      cards.forEach(function (c) { c.classList.remove('selected'); });
+      card.classList.add('selected');
+      selectedChoice = card.dataset.choice;
+      continue2.disabled = false;
+    });
+  });
+
+  continue2.addEventListener('click', function () {
+    if (!selectedChoice) return;
+    if (selectedChoice === 'food') {
+      currentPath = ['panel-1', 'panel-2', 'panel-2b', 'panel-3', 'panel-4'];
+      renderDots(currentPath.length);
+      showPanel('panel-2b');
+    } else {
+      currentPath = ['panel-1', 'panel-2', 'panel-3', 'panel-4'];
+      renderDots(currentPath.length);
+      showPanel('panel-3');
+    }
+  });
+
+  /* ---------------- step 2b: quelle cuisine ---------------- */
+  var cuisineChips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var continueCuisine = document.getElementById('continueCuisine');
+  var selectedCuisine = null;
+
+  cuisineChips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      cuisineChips.forEach(function (c) { c.classList.remove('selected'); });
+      chip.classList.add('selected');
+      selectedCuisine = { label: chip.dataset.label, emoji: chip.dataset.emoji };
+      continueCuisine.disabled = false;
+    });
+  });
+
+  continueCuisine.addEventListener('click', function () {
+    if (!selectedCuisine) return;
+    showPanel('panel-3');
+  });
+
+  /* ---------------- step 3: date et heure ---------------- */
+  var dateInput = document.getElementById('dateInput');
+  var timeInput = document.getElementById('timeInput');
+  var continue3 = document.getElementById('continue3');
+  var fieldError = document.getElementById('fieldError');
+
+  (function setMinDate() {
+    var d = new Date();
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    dateInput.min = y + '-' + m + '-' + day;
+  })();
+
+  continue3.addEventListener('click', function () {
+    if (!dateInput.value || !timeInput.value) {
+      fieldError.hidden = false;
+      return;
+    }
+    fieldError.hidden = true;
+    populateSummary();
+    showPanel('panel-4');
+    launchCelebration();
+  });
+
+  /* ---------------- step 4: confirmation ---------------- */
+  function formatDate(value) {
+    var parts = value.split('-').map(Number);
+    var d = new Date(parts[0], parts[1] - 1, parts[2]);
+    var formatted = d.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+  }
+
+  function formatTime(value) {
+    var parts = value.split(':').map(Number);
+    var h = parts[0], min = parts[1];
+    if (min === 0) return h + 'h';
+    return h + 'h' + String(min).padStart(2, '0');
+  }
+
+  function getPlanInfo() {
+    if (selectedChoice === 'coffee') {
+      return { label: 'Café', emoji: '☕' };
+    }
+    if (selectedCuisine) return selectedCuisine;
+    return { label: 'Resto', emoji: '🍽️' };
+  }
+
+  function populateSummary() {
+    var plan = getPlanInfo();
+    document.getElementById('summaryIcon').textContent = plan.emoji;
+    document.getElementById('summaryChoice').textContent = plan.label;
+    document.getElementById('summaryDate').textContent = formatDate(dateInput.value);
+    document.getElementById('summaryTime').textContent = formatTime(timeInput.value);
+  }
+
+  function launchCelebration() {
+    var container = document.getElementById('celebrate');
+    container.innerHTML = '';
+    var colors = ['#E9C983', '#DE9FB0', '#C6994F', '#E4D7F2'];
+    var count = window.innerWidth < 480 ? 16 : 26;
+    for (var i = 0; i < count; i++) {
+      var star = document.createElement('div');
+      star.className = 'star-particle';
+      star.style.left = (10 + Math.random() * 80) + '%';
+      star.style.top = (Math.random() * 15) + '%';
+      var size = 8 + Math.random() * 10;
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.background = colors[Math.floor(Math.random() * colors.length)];
+      star.style.animationDelay = (Math.random() * 0.4) + 's';
+      container.appendChild(star);
+    }
+    setTimeout(function () { container.innerHTML = ''; }, 2600);
+  }
+
+  /* ---------------- copier dans le presse-papiers ---------------- */
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+
+  function copyToClipboard(text) {
+    return new Promise(function (resolve) {
+      function legacyFallback() {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.top = '0';
+          ta.style.left = '0';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          ta.setSelectionRange(0, text.length);
+          var ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          resolve(!!ok);
+        } catch (err) {
+          resolve(false);
+        }
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          resolve(true);
+        }).catch(legacyFallback);
+      } else {
+        legacyFallback();
+      }
+    });
+  }
+
+  document.getElementById('copyBtn').addEventListener('click', function () {
+    var plan = getPlanInfo();
+    var text =
+      'C\u2019est oui ! 💫\n' +
+      plan.label + ' avec toi\n' +
+      '📅 ' + formatDate(dateInput.value) + '\n' +
+      '🕒 ' + formatTime(timeInput.value);
+
+    copyToClipboard(text).then(function (ok) {
+      if (ok) {
+        document.getElementById('copyFallback').hidden = true;
+        showToast('Copié ! Envoie maintenant le message à Imad 💌');
+      } else {
+        var fallback = document.getElementById('copyFallback');
+        fallback.hidden = false;
+        fallback.value = text;
+        fallback.focus();
+        fallback.select();
+        showToast('Sélectionne le message, copie-le, puis envoie-le à Imad.');
+      }
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    location.reload();
+  });
+
+})();
+</script>
+</body>
+</html>
